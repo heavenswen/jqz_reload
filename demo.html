@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>上拉加载，下拉刷新</title>
+	</head>
+	<style>
+		div,p{padding: 0; margin: 0;}
+		#con{background: #eee; margin: 0; }
+		#main{background-color:#fcc ;}
+		li{ padding: 15px; border-bottom: 1px dashed #999; position: relative; vertical-align: middle;}
+		.reload_up,.reload_down{
+			 height: 25px;overflow: hidden; text-align: center;line-height: 25px;color: #999;font-size: 12px;
+		}
+		.animate{
+			-webkit-animation: reload_up .2s forwards;
+			animation: reload_up .2s forwards;
+		}
+		@-webkit-keyframes reload_up{
+			100%{
+				height: 0;
+			}			
+		}
+		@keyframes reload_up{
+			100%{
+				height: 0;
+			}			
+		}
+		/*设置显示样式*/
+	</style>
+
+	<body>
+		<ol>
+			
+			<li>NO一个段落</li>		
+		</ol>
+		<div id="main">
+		<ol id='con'>
+			<li>这是一个段落</li>		
+			<li>这是一个段落</li>	
+			<li>这是一个段落</li>	
+			<li>这是一个段落</li>	
+			<li>这是一个段落</li>		
+		</ol>
+		</div>
+		<div class="footer" id="footer">footer</div>
+		<!--<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script><!--jq-->
+		<script src="//cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script><!--zepto-->
+		<script type="text/javascript" src="qiu.reload.0.1.js"></script>
+		<script>
+$(function(){
+	var html = $("#con").html();
+	function height_animate(obj){
+		obj.addClass('animate');
+		obj.on("webkitAnimationEnd animationEnd",function(){
+			obj.removeClass('animate');
+			obj.hide();
+		})
+	}
+	var upfun = function(data){			
+			if(data.bool){
+					setTimeout(function(){
+					
+					$("#con").html(html);
+					height_animate(data.obj);
+				},1000)	
+			}else{
+				height_animate(data.obj);	
+			}					
+	}
+	var downfun = function(data){
+		if(data.bool)
+		{
+			setTimeout(function(){
+				for(var i = 0; i< 5;i++ )
+				{
+					$("#con").append("<li>这是一个加载内容</li>");
+				}
+				height_animate(data.obj);
+			
+			},1000)
+		}else{
+			height_animate(data.obj);
+		}
+	}
+	var arr = {down1:"上拉重新加载",up:upfun,down:downfun};
+	var load = $.qiu_reload("#main",arr);
+	
+	//基于jquery or zepto js框架
+	//支持webkit浏览器和主流的pc浏览器
+	/*
+		top: "reload_up",//上方状态对象
+		up1: "下拉刷新",//上方原始状态
+		up2: "释放立即刷新",//上方可触发状态
+		up3: "加载中...!",//上方触发状态
+		bottom: "reload_down",
+		down1: "上拉加载更多",
+		down2: "释放加载更多",
+		down3: "加载中...",
+		distence: 45,//触发距离					
+		up:function(){},//上方触发事件
+		down:function(){}
+	 *///预设属性
+	//处理事件时返回一个状态对象和布尔值（当大于设置的距离时为true）
+	//down或up触发事件不存在时不执行该事件
+})
+		</script>
+	</body>
+
+</html>
