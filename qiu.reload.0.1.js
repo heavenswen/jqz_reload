@@ -25,7 +25,6 @@ var transform = fn_transform();
 			var $obj = $(id),
 				$top = '',
 				$bottom = '',
-				isdown = false, //拖动
 				starty = 0, //初始位置
 				move = 0, //移动距离
 				fx = false, //方向
@@ -33,11 +32,11 @@ var transform = fn_transform();
 					top: "reload_up",//上方状态对象
 					up1: "下拉刷新",//上方原始状态
 					up2: "释放立即刷新",//上方可触发状态
-					up3: "加载中...!",//上方触发状态
+					up3: "加载中",//上方触发状态
 					bottom: "reload_down",
 					down1: "上拉加载更多",
 					down2: "释放加载更多",
-					down3: "加载中...",
+					down3: "加载中",
 					distence: 45,//触发距离					
 					up:function(){},//上方触发事件
 					down:function(){}
@@ -67,15 +66,16 @@ var transform = fn_transform();
 			$obj.on("touchstart mousedown",startfun);
 			function startfun(e){
 				starty = positionY(e);
-				isdown = true;
 				fx = false;				
 				transfun('transition-duration','0ms');
+				
+				$obj.on("mousemove touchmove", movefun);
+				//touchend 注册
+				$(document).on("mouseup touchend",endfun);
 				if (!("ontouchend" in document)) e.preventDefault(); //是否支持touch
 			}
-			//2,moveing 
-			$obj.on("mousemove touchmove", movefun);
+			//2,moveing
 			function movefun(e) {
-				if (isdown) {
 					move = positionY(e) - starty;
 					//方向判断
 					if (arr.up&&move > 0 && !fx && $(window).scrollTop() <= 0) {
@@ -92,9 +92,7 @@ var transform = fn_transform();
 					}
 					//动画执行
 					if(fx)animate();
-				//touchend 注册
-				$(document).on("mouseup touchend",endfun);
-				} //moveing...
+				//moveing...
 			}
 			//动画效果
 			function animate() {
@@ -121,7 +119,7 @@ var transform = fn_transform();
 			}
 			//3,结束动画
 			function endfun() {
-				isdown = false;
+				$obj.off("mousemove touchmove", movefun);
 				$(document).off("mouseup touchend",endfun);
 				var m = move < 0 ? (move * -1) : move,
 				bool = m>init.distence?true:false;
