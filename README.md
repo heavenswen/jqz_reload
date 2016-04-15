@@ -14,19 +14,18 @@ object.on("webkitAnimationEnd animationEnd",function(){
 		})
 </code>
 <ul>
-<strong>自定义属性</strong>
-
-		<li>top: "reload_up",//上方状态对象class</li>
-		<li>up1: "下拉刷新",//上方原始状态</li>
-		<li>up2: "释放立即刷新",//上方可触发状态</li>
-		<li>up3: "加载中...!",//上方触发状态</li>
-		<li>bottom: "reload_down",class</li>
-		<li>down1: "上拉加载更多",</li>
-		<li>down2: "释放加载更多",</li>
-		<li>down3: "加载中...",</li>
-		<li>distence: 45,//触发距离	</li>				
-		<li>up:function(){},//上方触发事件</li>
-		<li>down:function(){}</li>
+	<strong>自定义属性</strong>
+	<li>top: "reload_up",//上方状态对象class</li>
+	<li>up1: "下拉刷新",//上方原始状态</li>
+	<li>up2: "释放立即刷新",//上方可触发状态</li>
+	<li>up3: "加载中...!",//上方触发状态</li>
+	<li>bottom: "reload_down",class</li>
+	<li>down1: "上拉加载更多",</li>
+	<li>down2: "释放加载更多",</li>
+	<li>down3: "加载中...",</li>
+	<li>distence: 45,//触发距离	</li>				
+	<li>up:function(){},//上方触发事件</li>
+	<li>down:function(){}</li>
 	<li>//触发事件时返回一个状态栏对象和布尔值（当大于设置的距离时为true）</li>
 	<li>//down或up触发事件不存在时不执行该事件</li>
 </ul>
