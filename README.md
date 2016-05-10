@@ -1,4 +1,4 @@
-# qiu_reload.js
+# jqz_reload.js
 <p>//基于jquery or zepto js框架</p>
 <p>支持webkit浏览器和主流的pc浏览器</p>
 <p>自定义触发距离</p>
